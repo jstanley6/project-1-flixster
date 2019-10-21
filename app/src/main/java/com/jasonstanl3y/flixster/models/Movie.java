@@ -1,5 +1,10 @@
 package com.jasonstanl3y.flixster.models;
 
+import android.util.Log;
+
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +12,8 @@ import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Headers;
 
 @Parcel
 public class Movie {
@@ -16,7 +23,9 @@ public class Movie {
     String overView;
     String backDropPath;
     double rating;
+    String posterSize;
 
+    List<Movie> imageSizes;
 
     // empty constructor needed by the Parceler library
     public Movie() {}
@@ -45,10 +54,12 @@ public class Movie {
 
 
     public String getPosterPath() {
+
         return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
     }
 
     public String getBackDropPath() {
+
         return String.format("https://image.tmdb.org/t/p/w342/%s", backDropPath);
     }
 
