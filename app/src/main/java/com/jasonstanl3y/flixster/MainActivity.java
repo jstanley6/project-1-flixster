@@ -1,12 +1,16 @@
 package com.jasonstanl3y.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import okhttp3.Headers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -23,7 +27,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-    public static final String CONFIGURATIONS_API = "https://api.themoviedb.org/3/configuration?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
     public static final String TAG = "MainActivity";
     List<Movie> movies;
     @Override
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher_popcorn);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+        final RecyclerView rvMovies = findViewById(R.id.rvMovies);
         movies = new ArrayList<>();
         //create adapter
 
@@ -48,26 +51,6 @@ public class MainActivity extends AppCompatActivity {
         //set a layout manager on the recycler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
-        AsyncHttpClient images_client = new AsyncHttpClient();
-        images_client.get(CONFIGURATIONS_API, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    jsonObject = jsonObject.getJSONObject("images");
-                    JSONArray images = jsonObject.getJSONArray("poster_sizes");
-                   // Log.i(TAG, "poster_sizes " + images.get(2));
-                } catch (JSONException e) {
-                  //  Log.e(TAG, "JSON Exception hit", e);
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-              //  Log.d(TAG, "onFailure");
-            }
-        });
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(NOW_PLAYING_URL, new JsonHttpResponseHandler() {

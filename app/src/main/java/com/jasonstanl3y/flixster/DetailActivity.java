@@ -1,11 +1,14 @@
 package com.jasonstanl3y.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import okhttp3.Headers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -30,6 +33,7 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView tvOverview;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
+    Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class DetailActivity extends YouTubeBaseActivity {
         tvOverview = findViewById(R.id.tvOverview);
         ratingBar = findViewById(R.id.ratingBar);
 
-        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+         movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverView());
         ratingBar.setRating((float)movie.getRating());
@@ -62,6 +66,8 @@ public class DetailActivity extends YouTubeBaseActivity {
                 } catch (JSONException e) {
                     Log.e("DetailActivity", "failed to parse JSON", e);
                 }
+
+
             }
 
             @Override
@@ -72,7 +78,6 @@ public class DetailActivity extends YouTubeBaseActivity {
 
 
 
-
     }
 
     private void initializedYouTube(final String youTubeKey) {
@@ -80,7 +85,11 @@ public class DetailActivity extends YouTubeBaseActivity {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d("DetailActivity", "OnSuccess");
-                youTubePlayer.cueVideo(youTubeKey);
+
+                if(movie.getRating() < 7)
+                    youTubePlayer.cueVideo(youTubeKey);
+                else
+                    youTubePlayer.loadVideo(youTubeKey);
             }
 
             @Override

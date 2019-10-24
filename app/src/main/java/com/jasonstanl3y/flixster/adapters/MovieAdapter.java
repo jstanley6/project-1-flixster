@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jasonstanl3y.flixster.DetailActivity;
+import com.jasonstanl3y.flixster.MainActivity;
 import com.jasonstanl3y.flixster.R;
 import com.jasonstanl3y.flixster.models.Movie;
 
@@ -22,6 +23,8 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
@@ -99,6 +102,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra("movie", Parcels.wrap(movie));
                     context.startActivity(intent);
+
+
                 }
             });
 

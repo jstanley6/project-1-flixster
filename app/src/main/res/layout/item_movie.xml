@@ -19,7 +19,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/border_image"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:transitionName="transition"/>
 
     <TextView
         android:id="@+id/tvTitle"
